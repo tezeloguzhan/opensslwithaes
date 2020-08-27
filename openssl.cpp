@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <stdlib.h>
 #include <openssl/aes.h>
@@ -6,23 +7,54 @@
 #include <string.h>
 
 using namespace std;
-unsigned char key[]="kafamagore";
+
+
+
+class SymmetricChipper{
+    
+    
+    public:
+
+    AES_KEY enc;
+    unsigned char out[20];
+    unsigned char decout[20];
+    
+  void Encrypt(){
+
+        
+        unsigned char text[]="procenne";
+
+        
+        
+        unsigned char key[]="01234567890123456789";
+
+        
+        AES_set_encrypt_key(key,128,&enc);
+        AES_encrypt(text,out,&enc);
+        cout<<"encrypted :\n"<<out<<endl;
+     
+
+    }
+
+    void Decrypt(){
+         unsigned char key[]="01234567890123456789";
+        AES_set_decrypt_key(key,128,&enc);
+        
+        AES_decrypt(out,decout,&enc);
+        cout<<"Decrypted :\n"<<decout;
+
+        
+
+    }
+
+};
 
 int main(){
-
-    unsigned char text[]="Procenne";
-    unsigned char out[20];
-    unsigned char in[20];
+    
+    SymmetricChipper obj;
+    obj.Encrypt();
+    obj.Decrypt();
+    
     
 
-    AES_KEY encrypt,decrypt;
-    AES_set_encrypt_key(key,128,&encrypt);
-    AES_encrypt(text,out,&encrypt);
-    cout<<"encryp data : "<<out;
-    AES_set_encrypt_key(key,128,&decrypt);
-    AES_decrypt(text,in,&decrypt);
-    cout<<"decrypt data"<<in<<endl;
-
 }
-
-
