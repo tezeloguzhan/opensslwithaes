@@ -1,20 +1,33 @@
-
 #include "openssl.h"
 
 
 
-int main(){
-    
-    unsigned char plainText[16] = "deneme";
-    unsigned char chipherText[16];
-    unsigned char out[16];
-    SymmetricChiper obj;
-    obj.Encrypt(plainText, chipherText);
-    obj.Decrypt(chipherText, out);
-    obj.print(chipherText, 16);
-    std::cout << (char*)out << std::endl;
-    obj.print(out, 16);
-    
-    
 
-}
+
+    void SymmetricChiper::initialize(unsigned char* key) 
+    {
+        m_key = key;
+        
+    }
+    
+    void SymmetricChiper::Encrypt(unsigned char* in, unsigned char* out){
+
+        
+        AES_set_encrypt_key(m_key, 128, &m_enc);
+        AES_encrypt(in, out, &m_enc);
+    }
+
+    void SymmetricChiper::Decrypt(unsigned char* in, unsigned char* out){
+        AES_set_decrypt_key(m_key, 128, &m_enc);
+        AES_decrypt(in, out, &m_enc);      
+
+    }
+
+    void SymmetricChiper::print(unsigned char* text, size_t size){
+        for(size_t i = 0; i < size; i++){
+            fprintf(stdout, "%02X", text[i]);
+        }
+        printf("\n");
+    }
+
+ 

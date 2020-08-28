@@ -1,7 +1,4 @@
 
-
-
-
 #include <iostream>
 #include <stdlib.h>
 #include <openssl/aes.h>
@@ -16,31 +13,15 @@ using namespace std;
 
 
 class SymmetricChiper{
-    
-    
+    private:
+    AES_KEY m_enc;
+    unsigned char* m_key;
     public:
-   
-
-    AES_KEY enc;    
-  void Encrypt(unsigned char* in, unsigned char* out){
-
-        unsigned char key[]="01234567890123456789";
-        AES_set_encrypt_key(key, 128, &enc);
-        AES_encrypt(in, out, &enc);
-    }
-
-    void Decrypt(unsigned char* in, unsigned char* out){
-        unsigned char key[]="01234567890123456789";
-        AES_set_decrypt_key(key, 128, &enc);
-        AES_decrypt(in, out, &enc);      
-
-    }
-
-    void print(unsigned char* text, size_t size){
-        for(size_t i = 0; i < size; i++){
-            fprintf(stdout, "%02X", text[i]);
-        }
-        printf("\n");
-    }
+     
+    void initialize(unsigned char* key);
+    //void initialize(std::string& hexKey);
+    void Encrypt(unsigned char* in, unsigned char* out);
+    void Decrypt(unsigned char* in, unsigned char* out);
+    void print(unsigned char* text, size_t size);
 
 };
